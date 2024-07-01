@@ -1,0 +1,9 @@
+{
+  "name": "Ree",
+  "version": "1.0.0",
+  "description": "这是一个 React-UI 轮子库",
+  "main": "index.js",
+  "repository": "https://github.com/A-Tione/ree.git",
+  "author": "A-Tione",
+  "license": "MIT"
+}
