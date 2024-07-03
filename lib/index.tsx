@@ -1,6 +1,5 @@
-const div = document.createElement('div');
-div.innerHTML = `<h1>内容</h1>`;
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-const root = document.getElementById('root') || document.body;
-console.log(root);
-root.appendChild(div);
+console.log(React, ReactDOM);
+
