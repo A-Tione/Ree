@@ -4,7 +4,8 @@ import Icon from './icon';
 function Button() {
   return (
     <div>
-      <Icon name='wecaht' />
+      <Icon name='wechat' />
+      <Icon name='apple' />
     </div>
   );
 }
