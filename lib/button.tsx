@@ -1,7 +1,11 @@
+
 import React from 'react';
+import Icon from './icon';
 function Button() {
   return (
-    <div>Click me</div>
+    <div>
+      <Icon name='wecaht' />
+    </div>
   );
 }
 
