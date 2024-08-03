@@ -1,3 +1,16 @@
+jest.mock('../importIcons', () => {
+    return {
+      context: () => {
+        const keys = () => [];
+        const module = (key: string) => null;
+        return {
+          keys,
+          module,
+        };
+      }
+    };
+  });
+
 import renderer from 'react-test-renderer'
 import React from 'react'
 import Button from '../button'

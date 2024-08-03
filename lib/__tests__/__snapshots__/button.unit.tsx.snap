@@ -2,6 +2,29 @@
 
 exports[`button 是个 div 1`] = `
 <div>
-  Click me
+  <svg
+    className="ree-icon"
+  >
+    <use
+      xlinkHref="#wechat"
+    />
+  </svg>
+  <svg
+    className="ree-icon"
+  >
+    <use
+      xlinkHref="#apple"
+    />
+  </svg>
+  <svg
+    className="ree-icon testClassName"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <use
+      xlinkHref="#apple"
+    />
+  </svg>
 </div>
 `;
