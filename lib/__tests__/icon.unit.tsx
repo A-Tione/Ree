@@ -27,7 +27,7 @@ describe("icon", () => {
     if (json && !Array.isArray(json) && json.props) {
       expect(json).toMatchSnapshot();
       json.props.onClick();
-      expect(fn).toBeCalled();
+      expect(fn).toHaveBeenCalled();
     } else {
       throw new Error("json is not valid");
     }
