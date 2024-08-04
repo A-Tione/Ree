@@ -1,3 +1,7 @@
+import renderer from 'react-test-renderer'
+import React from 'react'
+import Button from '../button'
+
 jest.mock('../importIcons', () => {
     return {
       context: () => {
@@ -10,10 +14,6 @@ jest.mock('../importIcons', () => {
       }
     };
   });
-
-import renderer from 'react-test-renderer'
-import React from 'react'
-import Button from '../button'
 
 describe('button', () => {
     it('是个 div', () => {

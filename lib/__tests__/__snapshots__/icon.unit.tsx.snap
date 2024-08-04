@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`icon onClick 1`] = `
+<svg
+  className="ree-icon"
+  onClick={[MockFunction]}
+>
+  <use
+    xlinkHref="#apple"
+  />
+</svg>
+`;
+
+exports[`icon 是个 svg 1`] = `
+<svg
+  className="ree-icon"
+>
+  <use
+    xlinkHref="#wechat"
+  />
+</svg>
+`;
+
+exports[`onClick 1`] = `
+<svg
+  className="ree-icon"
+  onClick={[MockFunction]}
+>
+  <use
+    xlinkHref="#apple"
+  />
+</svg>
+`;
