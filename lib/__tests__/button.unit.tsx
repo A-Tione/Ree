@@ -2,7 +2,7 @@ import renderer from 'react-test-renderer'
 import React from 'react'
 import Button from '../button'
 
-jest.mock('../importIcons', () => {
+jest.mock('../icon/importIcons', () => {
     return {
       context: () => {
         const keys = () => [];

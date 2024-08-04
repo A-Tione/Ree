@@ -20,14 +20,3 @@ exports[`icon 是个 svg 1`] = `
   />
 </svg>
 `;
-
-exports[`onClick 1`] = `
-<svg
-  className="ree-icon"
-  onClick={[MockFunction]}
->
-  <use
-    xlinkHref="#apple"
-  />
-</svg>
-`;

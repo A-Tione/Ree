@@ -1,8 +1,8 @@
 import React from "react";
-import Icon from "../icon";
+import Icon from "../icon/icon";
 import renderer from "react-test-renderer";
 
-jest.mock('../importIcons', () => {
+jest.mock('../icon/importIcons', () => {
   return {
     context: () => {
       const keys = () => [];
