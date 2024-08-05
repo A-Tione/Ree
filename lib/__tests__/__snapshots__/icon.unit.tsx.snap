@@ -1,22 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`icon onClick 1`] = `
-<svg
-  className="ree-icon"
-  onClick={[MockFunction]}
->
-  <use
-    xlinkHref="#apple"
-  />
-</svg>
-`;
-
 exports[`icon 是个 svg 1`] = `
-<svg
-  className="ree-icon"
->
-  <use
-    xlinkHref="#wechat"
-  />
-</svg>
+<div>
+  <svg
+    class="ree-icon"
+  >
+    <use
+      xlink:href="#apple"
+    />
+  </svg>
+</div>
 `;

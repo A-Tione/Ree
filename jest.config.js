@@ -5,7 +5,7 @@ module.exports = {
   clearMocks: false,
   collectCoverage: false,
   preset: "ts-jest",
-  testEnvironment: "node",
+  testEnvironment: "jest-environment-jsdom",
   reporters: ["default"],
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
   moduleDirectories: ['node_modules'],

@@ -1,6 +1,7 @@
 import React from "react";
 import Icon from "../icon/icon";
-import renderer from "react-test-renderer";
+import {render, fireEvent} from "@testing-library/react";
+import '@testing-library/jest-dom'
 
 jest.mock('../icon/importIcons', () => {
   return {
@@ -17,19 +18,14 @@ jest.mock('../icon/importIcons', () => {
 
 describe("icon", () => {
   it("是个 svg", () => {
-    const json = renderer.create(<Icon name="wechat" />).toJSON();
+    const json = render(<Icon name="apple" />).container;
     expect(json).toMatchSnapshot();
   });
   it("onClick", () => {
     const fn = jest.fn();
-    const json = renderer.create(<Icon name="apple" onClick={fn} />).toJSON();
-
-    if (json && !Array.isArray(json) && json.props) {
-      expect(json).toMatchSnapshot();
-      json.props.onClick();
-      expect(fn).toHaveBeenCalled();
-    } else {
-      throw new Error("json is not valid");
-    }
+    const {getByRole} = render(<Icon name="apple" role="button" onClick={fn} />);
+    
+    fireEvent.click(getByRole('button'));
+    expect(fn).toHaveBeenCalled();
   })
 })
