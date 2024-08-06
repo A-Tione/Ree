@@ -10,7 +10,7 @@ module.exports = {
   coveragePathIgnorePatterns: ["/node_modules/", "/test/", "/lib/index.tsx"],
   preset: "ts-jest",
   testEnvironment: "jest-environment-jsdom",
-  reporters: ["default", "jest-junit"],
+  reporters: ["default", ["jest-junit", { "outputDirectory": "./test-results/jest", "outputName": "results.xml" }]],
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
   moduleDirectories: ['node_modules'],
   moduleNameMapper: {

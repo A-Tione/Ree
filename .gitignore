@@ -6,7 +6,7 @@
 build/
 dist/
 coverage/
-junit.xml
+test-results/
 
 # Ignore node_modules
 node_modules/
