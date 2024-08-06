@@ -6,6 +6,7 @@
 build/
 dist/
 coverage/
+junit.xml
 
 # Ignore node_modules
 node_modules/
