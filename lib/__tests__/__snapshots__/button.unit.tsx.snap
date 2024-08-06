@@ -2,28 +2,6 @@
 
 exports[`button 是个 div 1`] = `
 <div>
-  <div>
-    <svg
-      class="ree-icon"
-    >
-      <use
-        xlink:href="#wechat"
-      />
-    </svg>
-    <svg
-      class="ree-icon"
-    >
-      <use
-        xlink:href="#apple"
-      />
-    </svg>
-    <svg
-      class="ree-icon testClassName"
-    >
-      <use
-        xlink:href="#apple"
-      />
-    </svg>
-  </div>
+  <div />
 </div>
 `;

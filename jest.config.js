@@ -3,7 +3,11 @@
 module.exports = {
   verbose: true,
   clearMocks: false,
-  collectCoverage: false,
+  collectCoverage: true,
+  coverageDirectory: "coverage",
+  coverageReporters: ["text", "lcov"],
+  collectCoverageFrom: ["lib/**/*.{ts,tsx}", "!**/node_modules/**"],
+  coveragePathIgnorePatterns: ["/node_modules/", "/test/", "/lib/index.tsx"],
   preset: "ts-jest",
   testEnvironment: "jest-environment-jsdom",
   reporters: ["default"],
