@@ -11,7 +11,6 @@ function runCommand(command: string) {
 
 function release(versionType: 'patch' | 'minor' | 'major') {
   runCommand(`npm version ${versionType}`);
-  runCommand('git commit -am "chore: bump version"');
   runCommand('git push');
 }
 
