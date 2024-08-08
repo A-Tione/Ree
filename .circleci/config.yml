@@ -55,7 +55,7 @@ jobs:
 
 workflows:
   version: 2.1
-  build_test_deploy::
+  build_accept_deploy:
     jobs:
       - prepare
       - test:
@@ -66,12 +66,12 @@ workflows:
             - test
         filters:
           branches:
-            ignore: /.*/ # 忽略所有分支，因为下面的publish_job将专门处理标签推送。
+            ignore: /.*/ 
       - publish:
           requires:
             - build
           filters:
             tags:
-              only: /^v[0-9]+(\.[0-9]+)*/ # 只有匹配此正则表达式的标签才会触发发布。
+              only: /^v[0-9]+(\.[0-9]+)*/
             branches:
-              ignore: /.*/ # 忽略所有分支，仅关注标签。
+              ignore: /.*/
