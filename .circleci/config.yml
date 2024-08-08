@@ -54,7 +54,7 @@ jobs:
       - run: yarn publish
 
 workflows:
-  version: 2
+  version: 2.1
   build_accept_deploy:
     jobs:
       - prepare
