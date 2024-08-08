@@ -68,7 +68,7 @@ workflows:
           requires:
             - build
           filters:
-            commits:
+            tags:
               only: /^[0-9]+(\.[0-9]+)*/
             branches:
               ignore: /.*/
