@@ -11,7 +11,7 @@ function runCommand(command: string) {
 
 function release(versionType: 'patch' | 'minor' | 'major') {
   runCommand(`npm version ${versionType}`);
-  runCommand('git push origin master:release');
+  runCommand('git push origin main:release');
 }
 
 const args = process.argv.slice(2);
