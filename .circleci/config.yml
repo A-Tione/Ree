@@ -3,7 +3,6 @@ defaults: &defaults
   docker:
     - image: cimg/node:18.0.0
 
-version: 2.1
 jobs:
   prepare:
     <<: *defaults
@@ -55,7 +54,7 @@ jobs:
 
 workflows:
   version: 2.1
-  build_accept_deploy:
+  build_and_test:
     jobs:
       - prepare
       - test:
@@ -64,11 +63,16 @@ workflows:
       - build:
           requires:
             - test
+        filters:
+          branches:
+            ignore: /.*/ # 忽略所有分支，因为下面的publish_job将专门处理标签推送。
+  publish_job:
+    jobs:
       - publish:
           requires:
             - build
           filters:
             tags:
-              only: /^v.*/
+              only: /^v[0-9]+(\.[0-9]+)*/ # 只有匹配此正则表达式的标签才会触发发布。
             branches:
-              ignore: /.*/
+              ignore: /.*/ # 忽略所有分支，仅关注标签。
