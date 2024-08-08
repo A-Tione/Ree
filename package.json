@@ -1,6 +1,6 @@
 {
   "name": "ree-demodemodemo",
-  "version": "0.0.28",
+  "version": "1.0.0",
   "description": "这是一个 React-UI 轮子库",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
