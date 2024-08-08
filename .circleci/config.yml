@@ -3,7 +3,7 @@ defaults: &defaults
   docker:
     - image: cimg/node:18.0.0
 
-version: 2
+version: 2.1
 jobs:
   prepare:
     <<: *defaults
@@ -58,12 +58,12 @@ workflows:
   build_accept_deploy:
     jobs:
       - prepare
-      - build:
-          requires:
-            - test
       - test:
           requires:
             - prepare
+      - build:
+          requires:
+            - test
       - publish:
           requires:
             - build
