@@ -64,9 +64,9 @@ workflows:
       - build:
           requires:
             - test
-        filters:
-          branches:
-            ignore: /.*/ 
+          filters:
+            branches:
+              ignore: /.*/ 
       - publish:
           requires:
             - build
