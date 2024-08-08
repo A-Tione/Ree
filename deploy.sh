@@ -2,3 +2,4 @@
 yarn version --new-version $1 && \
     # git push && \
     git push --tags
+    git push origin master
