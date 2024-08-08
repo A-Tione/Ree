@@ -3,7 +3,7 @@ defaults: &defaults
   docker:
     - image: cimg/node:18.0.0
 
-version: 2.1
+version: 2
 jobs:
   prepare:
     <<: *defaults
@@ -54,7 +54,7 @@ jobs:
       - run: yarn publish
 
 workflows:
-  version: 2.1
+  version: 2
   build_accept_deploy:
     jobs:
       - prepare
