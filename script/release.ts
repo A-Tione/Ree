@@ -15,6 +15,5 @@ function release(versionType: 'patch' | 'minor' | 'major') {
 }
 
 const args = process.argv.slice(2);
-console.log(1);
 
 release(args[0] as 'patch' | 'minor' | 'major' || 'patch');
