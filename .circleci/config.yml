@@ -55,7 +55,7 @@ jobs:
 
 workflows:
   version: 2.1
-  build_and_test:
+  build_test_deploy::
     jobs:
       - prepare
       - test:
@@ -67,8 +67,6 @@ workflows:
         filters:
           branches:
             ignore: /.*/ # 忽略所有分支，因为下面的publish_job将专门处理标签推送。
-  publish_job:
-    jobs:
       - publish:
           requires:
             - build
