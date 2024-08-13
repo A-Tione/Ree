@@ -1,10 +1,15 @@
 
 import React from 'react';
 
-function Button() {
+interface ButtonProps {
+  name?: string;
+}
+
+
+const Button = (props: ButtonProps) => {
   return (
-    <div></div>
-  );
+    <div>{props.name}</div>
+  )
 }
 
 export default Button;
