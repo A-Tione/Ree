@@ -6,6 +6,9 @@ module.exports = Object.assign({}, base, {
     entry: {
         example: './example.tsx',
     },
+    devServer: {
+        historyApiFallback: true,
+    },
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Ree',
