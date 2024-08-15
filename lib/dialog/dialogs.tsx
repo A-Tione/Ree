@@ -3,6 +3,7 @@ import './dialog.style.scss'
 import {Icon} from '../index'
 import { scopedClassMaker } from '../../lib/classes'
 import ReactDOM from 'react-dom'
+import {createRoot} from 'react-dom/client'
 
 interface Props {
   visible: boolean;
@@ -15,16 +16,22 @@ interface Props {
 const scopedClass = scopedClassMaker('ree-dialog')
 const sc = scopedClass
 
-const Dialog: React.FC<Props> = (props) => {
+const Dialog: React.FC<Props> = ({
+  visible,
+  button,
+  onClose,
+  closeOnClickMask = false,
+  children
+}) => {
   const onClickClose: React.MouseEventHandler = (e) => {
-    props.onClose(e)
+    onClose(e)
   }
   const onClickMask: React.MouseEventHandler = (e) => {
-    if (props.closeOnClickMask) {
-      props.onClose(e)
+    if (closeOnClickMask) {
+      onClose(e)
     }
   }
-  const content = props.visible ? 
+  const content = visible ? 
     <>
       <div className={sc('mask')} onClick={onClickMask}></div>
       <div className={sc()}>
@@ -35,11 +42,11 @@ const Dialog: React.FC<Props> = (props) => {
           提示
         </header>
         <main className={sc('main')}>
-          {props.children}
+          {children}
         </main>
         <footer className={sc('footer')}>
-          {props.button && props.button.map((button, index) =>
-            React.cloneElement(button, {key: index})
+          {button && button.map((btn, index) =>
+            React.cloneElement(btn, {key: index})
           )}
         </footer>
       </div>
@@ -49,8 +56,21 @@ const Dialog: React.FC<Props> = (props) => {
     return ReactDOM.createPortal(content, document.body)
 }
 
-Dialog.defaultProps = {
-  closeOnClickMask: false
+const alert = (content: string) => {
+  const div = document.createElement('div')
+  document.body.append(div)
+  const root = createRoot(div)
+  const component = <Dialog visible={true} onClose={()=> {
+    root.unmount()
+    div.remove()
+  }}>{content}</Dialog>
+  root.render(component)
 }
+
+// const confirm = () => {}
+
+// const modal = () => {}
+
+export {alert}
 
 export default Dialog;
