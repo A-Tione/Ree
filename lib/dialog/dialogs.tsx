@@ -7,7 +7,7 @@ import {createRoot} from 'react-dom/client'
 
 interface Props {
   visible: boolean;
-  button?: ReactElement[];
+  buttons?: ReactElement[];
   onClose: React.MouseEventHandler;
   closeOnClickMask?: boolean;
   children?: ReactNode;
@@ -18,7 +18,7 @@ const sc = scopedClass
 
 const Dialog: React.FC<Props> = ({
   visible,
-  button,
+  buttons,
   onClose,
   closeOnClickMask = false,
   children
@@ -44,11 +44,13 @@ const Dialog: React.FC<Props> = ({
         <main className={sc('main')}>
           {children}
         </main>
-        <footer className={sc('footer')}>
-          {button && button.map((btn, index) =>
-            React.cloneElement(btn, {key: index})
-          )}
-        </footer>
+        { buttons && buttons.length > 0 && 
+          <footer className={sc('footer')}>
+            {buttons && buttons.map((btn, index) =>
+              React.cloneElement(btn, {key: index})
+            )}
+          </footer>
+        }
       </div>
     </> 
     : 
@@ -56,21 +58,41 @@ const Dialog: React.FC<Props> = ({
     return ReactDOM.createPortal(content, document.body)
 }
 
-const alert = (content: string) => {
-  const div = document.createElement('div')
-  document.body.append(div)
-  const root = createRoot(div)
-  const component = <Dialog visible={true} onClose={()=> {
+
+const modal = (content: ReactNode, buttons?: ReactElement[], afterClose?: () => void) => {
+  const close = () => {
+    root.unmount()
+  }
+  const component = 
+  <Dialog 
+  visible={true} 
+  buttons={buttons}
+  onClose={()=> {
     root.unmount()
     div.remove()
-  }}>{content}</Dialog>
+  }}>
+      {content}
+    </Dialog>
+  const div = document.createElement('div')
+  const root = createRoot(div)  
   root.render(component)
+  
+  return close;
 }
 
-// const confirm = () => {}
+const alert = (content: string) => {
+  const button = <button onClick={() => close()}>OK</button>
+  const close = modal(content, [button])
+}
 
-// const modal = () => {}
+const confirm = (content: string, yes?: () => void, no?: () => void) => {
+  const buttons = [
+    <button onClick={() => {close(), yes &&yes()}}>Yes</button>,
+    <button onClick={() => {close(), no && no()}}>No</button>
+  ]
+  const close = modal(content, buttons)
+}
 
-export {alert}
+export {alert, modal, confirm}
 
 export default Dialog;
