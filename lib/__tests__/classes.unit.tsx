@@ -1,4 +1,4 @@
-import classes from "../helpers/classes";
+import classes, {scopedClassMaker} from "../helpers/classes";
 
 describe("classes", () => {
   it("接受 1 个 className", () => {
@@ -21,4 +21,15 @@ describe("classes", () => {
     const result = classes();
     expect(result).toEqual("");
   });
+})
+
+describe('scopedClassMaker', () => {
+  it('接受字符串或者对象', () => {
+    const sc = scopedClassMaker('ree-layout')
+    expect(sc('')).toEqual('ree-layout')
+    expect(sc('x')).toEqual('ree-layout-x')
+    expect(sc({x: true, y: false})).toEqual('ree-layout-x')
+    expect(sc({z: true, x: true})).toEqual('ree-layout-z ree-layout-x')
+    expect(sc({y: true, z: true}, {extra: 'red green'})).toEqual('ree-layout-y ree-layout-z red green')
+  })
 })
