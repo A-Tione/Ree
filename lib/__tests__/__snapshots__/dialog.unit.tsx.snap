@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Dialog 可以接受 visible 1`] = `<div />`;
-
-exports[`Dialog 是个 dialog 1`] = `<div />`;

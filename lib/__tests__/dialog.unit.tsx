@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
-import {render} from "@testing-library/react";
+import {render, act} from "@testing-library/react";
 import '@testing-library/jest-dom'
-import Dialog, {alert, confirm, modal} from '../dialog/dialogs'
+import Dialog, {modal} from '../dialog/dialogs'
 
 jest.mock('../icon/importIcons', () => {
   return {
@@ -52,8 +52,10 @@ describe('Dialog', () => {
     // it('可以使用 confirm', () => {
     //   const {queryByText} = render(confirm('Content', () => {}, () => {}))
     // })
-    it('可以使用 modal', () => {
+    it('可以使用 modal', async () => {
+      await act(async () => {
         const close = modal(<h1>你好</h1>, [<button onClick={() => close()}>close</button>])
         expect(close).toBeInstanceOf(Function)
+      })
     })
 })
