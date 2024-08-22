@@ -32,7 +32,7 @@ root?.render(
               <NavLink to="/dialog">Dialog</NavLink>
             </li>
             <li>
-              <NavLink to="/layout">布局</NavLink>
+              <NavLink to="/layout">Layout</NavLink>
             </li>
           </ul>
         </Aside>
