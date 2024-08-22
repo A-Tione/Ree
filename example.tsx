@@ -1,8 +1,8 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Icon } from "./lib";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import IconExample from "./lib/icon/icon.example";
+import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
+import IconDemo from './lib/icon/icon.demo'
 import ButtonExample from "./lib/button.example";
 import DialogExample from "./lib/dialog/dialog.example";
 import LayoutExample from "./lib/layout/layout.example";
@@ -18,31 +18,27 @@ root?.render(
   <Router>
     <Layout className="site-page">
       <Header className="site-header">
-        <div className="log">
+        <div className="logo">
           <Icon name='ree' style={{width: '4em', height: '4em', color: '#50A060'}} />
         </div>
       </Header>
       <Layout>
         <Aside className="site-aside">
-          <h2>组件</h2>
           <ul>
             <li>
-              <Link to="/icon">Icon</Link>
+              <NavLink to="/icon">Icon</NavLink>
             </li>
             <li>
-              <Link to="/button">Button</Link>
+              <NavLink to="/dialog">Dialog</NavLink>
             </li>
             <li>
-              <Link to="/dialog">Dialog</Link>
-            </li>
-            <li>
-              <Link to="/layout">布局</Link>
+              <NavLink to="/layout">布局</NavLink>
             </li>
           </ul>
         </Aside>
         <Content className="site-main">
           <Routes>
-            <Route path="/icon" element={<IconExample />} />
+            <Route path="/icon" element={<IconDemo />} />
             <Route path="/button" element={<ButtonExample />} />
             <Route path="/dialog" element={<DialogExample />} />
             <Route path="/layout" element={<LayoutExample />} />

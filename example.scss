@@ -4,26 +4,29 @@
 ul, ol {list-style: none;}
 h1, h2, h3, h4, h5, h6 {font-weight: normal;}
 a { text-decoration: none; color: inherit; }
+body {
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+}
 $padding: 16px;
 $main-color: #00ADB5;
 $border-color: #eee;
 .site-page {
   background: #ffffff;
+  min-height: 100vh
 }
 .site-main {
   padding-top: 16px;
 }
 .site-header {
   background: $border-color;
-  padding: 8px 0;
+  padding: 0 0 8px;
   .logo {
     padding: 0 $padding;
     display: flex;
     align-items: center;
-    > img {margin-right: 8px;}
-    > span {
-      color: $main-color;
-      font-size: 32px;
+    svg {
+      display: inline-block;
     }
   }
 }
@@ -35,12 +38,20 @@ $border-color: #eee;
     font-size: 18px;
   }
   ul {
-    padding: 0 $padding;
     min-width: 12em;
     > li {
       padding: 8px 0;
       a {
-        color: $main-color;
+        color: #333;
+        display: block;
+        padding: 8px $padding;
+        &:hover {
+          color: $main-color;
+        }
+        &.active {
+          color: white;
+          background: $main-color;
+        }
       }
     }
   }
