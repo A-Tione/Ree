@@ -11,15 +11,8 @@
   &-header, &-footer, &-aside, &-content {
     padding: 8px 16px;
   }
-  &-aside {
-    background-color: rgba(173, 216, 230, 0.6);
-  }
-  &-header, &-footer {
-    background-color: rgba(26, 163, 175, 0.3);
-  }
   &-content {
     flex-grow: 1;
-    background-color: rgba(173, 216, 230, 0.2);
   }
   & & {
     flex-grow: 1;
