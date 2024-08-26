@@ -4,6 +4,7 @@ import Icon from "./icon"
 const IconExample1: React.FunctionComponent = () => {
   return (
     <div>
+      demo
       <Icon name='wechat'  style={{fontSize: '3em'}}/>
     </div>
   )
