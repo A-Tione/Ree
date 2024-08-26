@@ -4,7 +4,7 @@ const htmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = Object.assign({}, base, {
     mode: 'production',
     output: {
-        path: path.resolve(__dirname, 'doc'),
+        path: path.resolve(__dirname, 'docs'),
     },
     entry: {
         example: './example.tsx',
@@ -12,7 +12,7 @@ module.exports = Object.assign({}, base, {
     plugins: [
         new htmlWebpackPlugin({
             title: 'Ree',
-            template: 'example.html',
+            template: 'index.html',
         })
     ]
 });
