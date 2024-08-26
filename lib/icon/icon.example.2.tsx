@@ -1,13 +1,12 @@
 import React from "react";
 import Icon from "./icon"
 
-const IconExample: React.FunctionComponent = () => {
+const IconExample2: React.FunctionComponent = () => {
   return (
     <div>
-      <Icon name='wechat' />
       <Icon name='apple' />
     </div>
   )
 }
 
-export default IconExample;
+export default IconExample2;
