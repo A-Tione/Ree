@@ -1,9 +1,5 @@
 import React from 'react'
-import Layout from './layout'
-import Header from './header'
-import Content from './content'
-import Footer from './footer'
-import Aside from './aside'
+import {Layout, Aside, Header, Content, Footer} from './layout'
 import './layout.example.scss'
 
 export default function () {
