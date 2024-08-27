@@ -16,10 +16,16 @@ $main-color: #00ADB5;
 $border-color: #eee;
 .site-page {
   background: #ffffff;
-  min-height: 100vh
+  min-height: 100vh;
 }
 .site-main {
   padding-top: 16px;
+  .ree-layout {
+    flex-direction: column;
+    &.hasAside {
+      flex-direction: row;
+    }
+  }
 }
 .site-header {
   background: $border-color;
