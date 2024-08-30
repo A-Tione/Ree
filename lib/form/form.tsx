@@ -16,10 +16,14 @@ interface Props {
   onChange: (value: FormValue) => void;
   onSubmit: React.FormEventHandler<HTMLFormElement>
   errors: { [K: string]: string[] }
+  errorsDisplayMode?: 'first' | 'all'
 }
 
 
-const Form: React.FunctionComponent<Props> = (props) => {
+const Form: React.FunctionComponent<Props> = ({
+  errorsDisplayMode = 'first',
+  ...props
+}) => {
   const formData = props.value;
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -30,7 +34,7 @@ const Form: React.FunctionComponent<Props> = (props) => {
   }
   return (
     <form onSubmit={onSubmit}>
-      <table>
+      <table className="ree-form-table">
         <tbody>
           {props.fields.map(f => 
           <tr className={classes('ree-form-tr')} key={f.name}>
@@ -44,8 +48,12 @@ const Form: React.FunctionComponent<Props> = (props) => {
                 value={props.value[f.name]} 
                 onChange={(e) => onInputChange(f.name, (e.target as HTMLInputElement).value)} 
                 />
-              <div className='ree-form-error'>
-                {props.errors[f.name]}
+              <div className='ree-form-error'>{
+                props.errors[f.name] ? 
+                  (errorsDisplayMode === 'first' ? 
+                    props.errors[f.name][0] : props.errors[f.name]?.join(', ')) : 
+                    <span>&nbsp;</span>
+                }
               </div>
             </td>
           </tr>
