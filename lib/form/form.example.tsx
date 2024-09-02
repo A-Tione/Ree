@@ -8,7 +8,6 @@ const usernames = ['atione', 'atione1', 'jack']
 
 const checkUserName = (username: string, successful: () => void, fail: () => void) => {
   setTimeout(() => {
-    console.log('checkUserName');
     if (usernames.indexOf(username) >= 0) {
       fail()
     } else {
@@ -34,7 +33,6 @@ const FormExample: React.FunctionComponent = () => {
       {key: 'usename', validator: {
         name: 'unique',
         validate(username: string) {
-          console.log('有人调用validate了');
           return new Promise<void>((resolve, reject) => {
             checkUserName(username, resolve, reject)
           })
@@ -44,13 +42,21 @@ const FormExample: React.FunctionComponent = () => {
       {key: 'password', required: true}
     ]
     Validator(formData, rules, (errors) => {
-      console.log(errors);
       setErrors(errors)
       if (noError(errors)) {
-        console.log('校验成功');
-        
+        // 校验无错误
       }
     })
+  }
+  const transformError = (message: string) => {
+    const map: any = {
+      unique: '用户名已存在',
+      required: '必填',
+      minLength: '太短',
+      maxLength: '太长',
+      patternNotMatch: '格式不正确'
+    }
+    return map[message]
   }
 
   return (
@@ -62,8 +68,9 @@ const FormExample: React.FunctionComponent = () => {
               <Button>Back</Button>
             </>
           }
-          errorsDisplayMode='all'
+          errorsDisplayMode='first'
           errors={errors}
+          transformError={transformError}
           onChange={(newValue) => setFormData(newValue)}
           onSubmit={onSubmit}
     />

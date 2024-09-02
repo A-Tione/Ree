@@ -39,35 +39,46 @@ const Validator = (formValue: FormValue, rules: FormRules, callback: (errorList:
     const value = formValue[rule.key]
     if(rule.validator) {
       const promise = rule.validator.validate(value)
-      addError(rule.key, {message: 'validating', promise})
+      addError(rule.key, {message: rule.validator.name, promise})
     }
     if(rule.required && isEmpty(value)) {
       addError(rule.key, {message: 'required'})
     }
     if (rule.minLength && !isEmpty(value) && value.length < rule.minLength) {
-      addError(rule.key, {message: 'too short'})
+      addError(rule.key, {message: 'minLength'})
     }
     if (rule.maxLength && !isEmpty(value) && value.length > rule.maxLength) {
-      addError(rule.key, {message: 'too long'})
+      addError(rule.key, {message: 'maxLength'})
     }
     if (rule.pattern && !(rule.pattern.test(value))) {
-      addError(rule.key, {message: 'pattern not match'})
+      addError(rule.key, {message: 'patternNotMatch'})
     }
   })
+  
   const promiseList = flat(Object.values(errors))
-    .filter((item): item is OneError & { promise: Promise<any> } => !!item.promise)
-    .map(item => item.promise)
-  Promise.all(promiseList).then(() => {
+  .filter(item => item.promise)
+  .map(item => item.promise)
+
+  Promise.allSettled(promiseList).then(results => {
+    const hasRejected = results.some(result => result.status === 'rejected');
+    
     const newErrors = fromEntries(
-      Object.keys(errors).map(key => [key, errors[key].map((item: OneError) => item.message)])
-    )
-    callback(newErrors)
-  }, () => {
-    const newErrors = fromEntries(
-      Object.keys(errors).map(key => [key, errors[key].map((item: OneError) => item.message)])
-    )
-    callback(newErrors)
-  })
+      Object.keys(errors).map(key => [
+        key,
+        errors[key].reduce((acc: string[], item: OneError) => {
+          // 当至少有一个 Promise 失败或当前项没有 promise 时，添加 message 到数组
+          if (hasRejected || !item.promise) {
+            acc.push(item.message);
+          }
+          return acc;
+        }, [])
+      ])
+    );
+  
+    console.log(hasRejected ? 'catch' : 'then', newErrors);
+      
+    callback(newErrors);
+  });
 }
 
 function flat(array: Array<any>) {
