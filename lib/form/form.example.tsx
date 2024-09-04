@@ -26,20 +26,19 @@ const FormExample: React.FunctionComponent = () => {
     usename: 'atione',
     password: ''
   });
+  const validator = (username: string) => {
+      return new Promise<string>((resolve, reject) => {
+        checkUserName(username, () => resolve('string'), () => reject('unique'))
+      })
+  }
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     const rules = [
       {key: 'usename', required: true},
       {key: 'usename', minLength: 6, maxLength: 16},
-      {key: 'usename', validator: {
-        name: 'unique',
-        validate(username: string) {
-          return new Promise<void>((resolve, reject) => {
-            checkUserName(username, resolve, reject)
-          })
-        }}
-      },
+      {key: 'usename', validator},
       {key: 'usename', pattern: /^[A-Za-z0-9]+$/},
-      {key: 'password', required: true}
+      {key: 'password', required: true},
+      {key: 'password', validator},
     ]
     Validator(formData, rules, (errors) => {
       setErrors(errors)
