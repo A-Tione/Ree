@@ -62,14 +62,13 @@ const Validator = (formValue: FormValue, rules: FormRules, callback: (errorList:
     .then(() => [key, undefined], (reason: string) => [key, reason]))
     
   Promise.all(newPromise).then(results => {
-    const filtered = results.filter(r => r[1] !== undefined) as Array<[key: string, key: string]>
+    const filtered = results.filter(r => r[1] !== undefined) as Array<[string, string]>
     callback(zip(filtered))
   })
-
 }
 
 function zip(array: Array<[string, string]>) {
-  const result: any = {}
+  const result: {[key:string]: string[]} = {}
   array.map(([key, value]) => {
     result[key] = result[key] || []
     result[key].push(value)
