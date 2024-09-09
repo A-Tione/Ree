@@ -16,7 +16,7 @@ const checkUserName = (username: string, successful: () => void, fail: () => voi
   }, 2000)
 }
 
-const FormExample: React.FunctionComponent = () => {
+export default () => {
   const [fields] = useState([
     {name: 'usename', label: '用户名', input: {type: 'text'}},
     {name: 'password', label: '密码', input: {type: 'password'}}
@@ -75,5 +75,3 @@ const FormExample: React.FunctionComponent = () => {
     />
   )
 }
-
-export default FormExample;

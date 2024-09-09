@@ -43,9 +43,7 @@ export default function cachedScrollbarWidth() {
   document.body.appendChild(div);
 
   const width = div.offsetWidth - div.clientWidth;
-  console.log(width);
-  
-
+  console.log(width, 'width');
   document.body.removeChild(div);
 
   return width;
