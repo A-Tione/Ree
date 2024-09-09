@@ -1,0 +1,30 @@
+.ree-scroll {
+  position: relative;
+  overflow: auto;
+  &-inner {
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: -16px;
+  }
+  &-bar {
+    position: absolute;
+    background: fade_out(black, 0.5);
+    border-radius: 4px;
+    cursor: pointer;
+    &-x {
+      height: 8px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    &-y {
+      width: 8px;
+      top: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+}

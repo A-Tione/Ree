@@ -7,6 +7,7 @@ import ButtonExample from "./lib/button.example";
 import DialogExample from "./lib/dialog/dialog.demo";
 import LayoutExample from "./lib/layout/layout.demo";
 import FormExample from "./lib/form/form.example";
+import ScrollExample from "./lib/scroll/scroll.example";
 import {Layout, Aside, Header, Content, Footer} from './lib/layout/layout'
 import './example.scss'
 
@@ -38,6 +39,9 @@ root?.render(
             <li>
               <NavLink to="/form">Form</NavLink>
             </li>
+            <li>
+              <NavLink to="/scroll">Scroll</NavLink>
+            </li>
           </ul>
         </Aside>
         <Content className="site-main">
@@ -47,6 +51,7 @@ root?.render(
             <Route path="/dialog" element={<DialogExample />} />
             <Route path="/layout" element={<LayoutExample />} />
             <Route path="/form" element={<FormExample />} />
+            <Route path="/scroll" element={<ScrollExample />} />
           </Routes>
         </Content>
       </Layout>
