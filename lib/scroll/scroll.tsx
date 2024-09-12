@@ -2,6 +2,7 @@ import * as React from 'react';
 import { HTMLAttributes, useEffect, useRef, useState} from 'react'
 import './scroll.scss'
 import cachedScrollbarWidth from './scrollbar-width'
+import {scopedClassMaker} from '../helpers/classes'
 
 interface Props extends HTMLAttributes<HTMLElement> {
 }
@@ -10,13 +11,24 @@ const Scroll: React.FunctionComponent<Props> = (props) => {
   const {children, ...rest} = props;
   const [barHeight, setBarHeight] = useState(0)
   const [barTop, setBarTop] = useState(0)
+  const [barVisible, setBarVisible] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
+  const timerIdRef = useRef<number | null>(null)
+  const sc = scopedClassMaker('ree-scroll')
   const onScroll = (e: React.UIEvent) => {
     const {current} = scrollRef
     const scrollHeight = current!.scrollHeight
     const viewHeight = current!.getBoundingClientRect().height
     const scrollTop = current!.scrollTop
     setBarTop((scrollTop * viewHeight) / scrollHeight)
+    console.log('move');
+    setBarVisible(true)
+    if (timerIdRef.current !== null) {
+      window.clearTimeout(timerIdRef.current)
+    }
+    timerIdRef.current = window.setTimeout(() => {
+      setBarVisible(false)
+    }, 300)
   }
   const draggingRef = useRef(false)
   const firstYRef = useRef(0)
@@ -84,16 +96,16 @@ const Scroll: React.FunctionComponent<Props> = (props) => {
   }, [])
 
   return (
-    <div className='ree-scroll' {...rest}>
-      <div className='ree-scroll-inner' 
+    <div className={sc('')} {...rest}>
+      <div className={sc('inner')}
           style={{right: -cachedScrollbarWidth()}}
           onScroll={onScroll}
           ref={scrollRef}
       >
         {children}
       </div>
-      <div className='ree-scroll-track' onMouseDown={onMouseDownTrack}>
-        <div className='ree-scroll-bar' 
+      <div className={sc('track', {extra: barVisible? 'show' : ''})} onMouseDown={onMouseDownTrack}>
+        <div className={sc('bar')}
             style={{height: barHeight, transform: `translateY(${barTop}px)`}}
             onMouseDown={onMouseDown}
         />
