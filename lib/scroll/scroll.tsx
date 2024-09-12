@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { HTMLAttributes, useEffect, useRef, useState} from 'react'
+import { TouchEventHandler } from 'react';
 import './scroll.scss'
 import cachedScrollbarWidth from './scrollbar-width'
 import {scopedClassMaker} from '../helpers/classes'
 
 interface Props extends HTMLAttributes<HTMLElement> {
+  onPull?: () => void
 }
 
 const Scroll: React.FunctionComponent<Props> = (props) => {
-  const {children, ...rest} = props;
+  const {children, onPull, ...rest} = props;
   const [barHeight, setBarHeight] = useState(0)
   const [barTop, setBarTop] = useState(0)
   const [barVisible, setBarVisible] = useState(false)
@@ -71,7 +73,6 @@ const Scroll: React.FunctionComponent<Props> = (props) => {
     scrollRef.current!.scrollTop = newBarTop * scrollHeight / viewHeight
   }
 
-  
   useEffect(() => {
     document.addEventListener('mousemove', onMouseMove)
     document.addEventListener('mouseup', onMouseUp)
@@ -95,12 +96,53 @@ const Scroll: React.FunctionComponent<Props> = (props) => {
     }
   }, [])
 
+  const [translateY, _setTranslateY] = useState(0);
+  const touchY = 100;
+  const setTranslateY = (y: number) => {
+    if (y < 0) {y = 0;} else if (y > touchY) {y = touchY;}
+    _setTranslateY(y);
+  };
+  const lastYRef = useRef(0);
+  const moveCount = useRef(0);
+  const pulling = useRef(false);
+  const onTouchStart: TouchEventHandler = (e) => {
+    const scrollTop = scrollRef.current!.scrollTop;
+    if (scrollTop !== 0) {return;}
+    pulling.current = true;
+    lastYRef.current = e.touches[0].clientY;
+    moveCount.current = 0;
+  };
+  const onTouchMove: TouchEventHandler = (e) => {
+    const deltaY = e.touches[0].clientY - lastYRef.current;
+    moveCount.current += 1;
+    if (moveCount.current === 1 && deltaY < 0) {
+      pulling.current = false;
+      return;
+    }
+    if (!pulling.current) {return;}
+    setTranslateY(translateY + deltaY);
+    console.log(translateY + deltaY);
+    lastYRef.current = e.touches[0].clientY;
+  };
+  const onTouchEnd: TouchEventHandler = () => {
+    if (pulling.current) {
+      setTranslateY(0);
+      if (translateY >= touchY) {
+        onPull && onPull();
+      }
+      pulling.current = false;
+    }
+  };
+
   return (
     <div className={sc('')} {...rest}>
       <div className={sc('inner')}
-          style={{right: -cachedScrollbarWidth()}}
-          onScroll={onScroll}
+          style={{right: -cachedScrollbarWidth(), transform: `translateY(${translateY}px)`}}
           ref={scrollRef}
+          onScroll={onScroll}
+          onTouchMove={onTouchMove}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
       >
         {children}
       </div>
@@ -109,6 +151,11 @@ const Scroll: React.FunctionComponent<Props> = (props) => {
             style={{height: barHeight, transform: `translateY(${barTop}px)`}}
             onMouseDown={onMouseDown}
         />
+      </div>
+      <div className="fui-scroll-pulling" style={{height: translateY}}>
+        {translateY === touchY ?
+          <span className="fui-scroll-pulling-text">释放手指即可更新</span> :
+          <span className="fui-scroll-pulling-icon">↓</span>}
       </div>
     </div>
   )

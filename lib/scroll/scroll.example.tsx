@@ -2,11 +2,14 @@ import * as React from 'react'
 import Scroll from './scroll'
 
 const ScrollExample: React.FunctionComponent = () => {
+  const onPull = () => {
+    console.log('下拉刷新了')
+  }
   return (
     <div>
       <div>
         <h2>第一个例子</h2>
-        <Scroll style={{height: 100, border: '1px solid red'}}>
+        <Scroll style={{height: 100}} onPull={onPull}>
           <p>1</p>
           <p>2</p>
           <p>3</p>
