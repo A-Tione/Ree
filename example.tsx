@@ -8,6 +8,7 @@ import DialogExample from "./lib/dialog/dialog.demo";
 import LayoutExample from "./lib/layout/layout.demo";
 import FormExample from "./lib/form/form.demo";
 import ScrollExample from "./lib/scroll/scroll.example";
+import TreeExample from "./lib/tree/tree.example";
 import {Layout, Aside, Header, Content, Footer} from './lib/layout/layout'
 import './example.scss'
 
@@ -42,6 +43,9 @@ root?.render(
             <li>
               <NavLink to="/scroll">Scroll</NavLink>
             </li>
+            <li>
+              <NavLink to="/tree">Tree</NavLink>
+            </li>
           </ul>
         </Aside>
         <Content className="site-main">
@@ -52,6 +56,7 @@ root?.render(
             <Route path="/layout" element={<LayoutExample />} />
             <Route path="/form" element={<FormExample />} />
             <Route path="/scroll" element={<ScrollExample />} />
+            <Route path="/tree" element={<TreeExample />} />
           </Routes>
         </Content>
       </Layout>
