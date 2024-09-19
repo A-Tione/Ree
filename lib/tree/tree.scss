@@ -1,0 +1,11 @@
+.ree-tree {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  &-level-1 {
+    padding-left: 4px;
+  }
+  &-level-2 {
+    padding-left: 8px;
+  }
+}

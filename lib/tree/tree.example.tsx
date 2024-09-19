@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import Tree from './tree'
 
 const TreeExample: React.FC = () => {
-  const [array, setArray] = useState([
+  const [array] = useState([
     {text: '1', value: '1', 
       children: [
       {text: '1.1', value: '1.1', children: [
