@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 interface SourceDataItem {
   text: string;
@@ -10,16 +10,20 @@ interface TreeProps {
   sourceData: SourceDataItem[]
 }
 
+const RenderItem = ({item}: {item: SourceDataItem}) => {
+  return <div>
+    {item.text}
+    {item.children?.map((item2, index) => {
+      return <RenderItem key={index} item={item2} />
+    })}
+  </div>
+}
+
 const Tree: React.FC<TreeProps> = (props) => {
   return (
     <div>
-      {props.sourceData.map(item => {
-        return <div>
-          {item.text}
-          {item.children && item.children.map(item2 => {
-            return <div>{item2.text}</div>
-          })}
-        </div>
+      {props.sourceData.map((item, index) => {
+        return <RenderItem key={index} item={item} />
       })}
     </div>
   )
