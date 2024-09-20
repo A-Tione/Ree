@@ -28,8 +28,9 @@ const TreeExample: React.FC = () => {
       <h1>展示数据</h1>
       <Tree 
         sourceData={array}
-        selectedValues={selectedValues} 
+        selected={selectedValues} 
         onChange={onchange}
+        multiple={true}
       />
     </div>
   )
