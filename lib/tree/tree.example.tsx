@@ -15,6 +15,7 @@ const TreeExample: React.FC = () => {
     ]}
   ])
   const [selectedValues, setSelectedValues] = useState(['1.1.1'])
+  const [selectedValue, setSelectedValue] = useState('1.1.1')
   const onchange = (item: SourceDataItem, bool: boolean) => {
     if (bool) {
       setSelectedValues([...selectedValues, item.value])
@@ -28,9 +29,9 @@ const TreeExample: React.FC = () => {
       <h1>展示数据</h1>
       <Tree 
         sourceData={array}
-        selected={selectedValues} 
+        selected={selectedValue} 
         onChange={onchange}
-        multiple={true}
+        multiple={false}
       />
     </div>
   )

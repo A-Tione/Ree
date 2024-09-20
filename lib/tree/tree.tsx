@@ -17,46 +17,35 @@ type TreeProps = {
 const scopedClass = scopedClassMaker('ree-tree')
 const sc = scopedClass
 
-const RenderItem: React.FC<{
-  item: SourceDataItem; 
-  onChange: (item: SourceDataItem, bool: boolean) => void;
-  selected: string[], 
-  level?: number
-}> = ({item, onChange, selected, level = 1}) => {
-  const classes = {
-    ['level-' + level]: true,
-    'item': true
-  }
-
-  return <div className={sc(classes)}>
-    <div className={sc('text')}>
-      <input 
-        type='checkbox' 
-        onChange={ (e)=> onChange(item, e.target.checked)} 
-        checked={!!selected.find(value => value === item.value)}
-      />
-      {item.text}
-    </div>
-    {item.children?.map(item2 => {
-      return <RenderItem key={item2.value} item={item2} onChange={onChange} selected={selected} level={level + 1} />
-    })}
-  </div>
-}
-
 const Tree: React.FC<TreeProps> = (props) => {
-  if (props.multiple) {
+  const renderItem = (item: SourceDataItem, level = 1) => {
+    const classes = {
+      ['level-' + level]: true,
+      'item': true
+    }
+    const checked = props.multiple ? props.selected.indexOf(item.value) >= 0 : props.selected === item.value
+  
+    return <div key={item.value} className={sc(classes)}>
+      <div className={sc('text')}>
+        <input 
+          type='checkbox' 
+          onChange={ (e)=> props.onChange(item, e.target.checked)} 
+          checked={checked}
+        />
+        {item.text}
+      </div>
+      {item.children?.map(item2 => {
+        return renderItem(item2)
+      })}
+    </div>
+  }
     return (
       <div>
         {props.sourceData.map(item => {
-          return <RenderItem key={item.value} item={item} onChange={props.onChange} selected={props.selected} />
+          return renderItem(item)
         })}
       </div>
     )
-  } else {
-    return (
-      <div>...</div>
-    )
-  }
 }
 
 export default Tree;
