@@ -1,11 +1,43 @@
 .ree-tree {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  &-item {
+    line-height: 1.5;
+  }
   &-level-1 {
-    padding-left: 4px;
+    .ree-tree-text {
+      padding-left: 0;
+    }
   }
   &-level-2 {
-    padding-left: 8px;
+    .ree-tree-text {
+      padding-left: 1em;
+    }
+  }
+  &-level-3 {
+    .ree-tree-text {
+      padding-left: 2em;
+    }
+  }
+  &-level-4 {
+    .ree-tree-text {
+      padding-left: 3em;
+    }
+  }
+  &-collapse, &-expand {
+    cursor: pointer;
+  }
+  &-text {
+    display: block;
+    &:hover {
+      background-color: orange;
+    }
+  }
+  &-collapsed {
+    height: 0;
+    overflow: hidden;
+  }
+  &-expanded {
+    transition: height 0.5s;
   }
 }
