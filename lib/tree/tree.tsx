@@ -30,18 +30,20 @@ const Tree: React.FC<TreeProps> = (props) => {
         } else {
           props.onChange(props.selected.filter(value => value !== item.value))
         }
+      } else {
+        props.onChange(item.value)
       }
     }
   
     return <div key={item.value} className={sc(classes)}>
-      <div className={sc('text')}>
+      <label className={sc('text')}>
         <input 
           type='checkbox' 
           onChange={onChange} 
           checked={checked}
         />
         {item.text}
-      </div>
+      </label>
       {item.children?.map(item2 => {
         return renderItem(item2)
       })}
