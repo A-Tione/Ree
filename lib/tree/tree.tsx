@@ -10,9 +10,8 @@ interface SourceDataItem {
 
 type TreeProps = {
   sourceData: SourceDataItem[],
-  onChange: (values: string[]) => void
-}
-& ({selected: string[], multiple: true} | {selected: string, multiple?: false})
+} & ({multiple: true, selected: string[], onChange: (values: string[]) => void} 
+    | {multiple?: false, selected: string, onChange: (values: string) => void})
 
 const scopedClass = scopedClassMaker('ree-tree')
 const sc = scopedClass
