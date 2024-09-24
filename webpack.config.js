@@ -6,6 +6,9 @@ module.exports = {
       },
       resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.json'],
+        alias: {
+          '@': path.resolve(__dirname, 'lib'),
+        }
       },
       output: {
         path: path.resolve(__dirname, 'dist/lib'),

@@ -3,6 +3,9 @@
     "outDir": "./dist/",
     "declaration": true,
     "baseUrl": ".",
+    "paths": {
+      "@/*": ["lib/*"]
+    },
     "module": "esnext",
     "target": "es5",
     "lib": ["es6", "dom"],

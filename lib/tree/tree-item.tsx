@@ -1,4 +1,5 @@
 import React, { ChangeEventHandler, useState } from 'react';
+import useUpdate from '@/hooks/useUpdate';
 import { scopedClassMaker } from '../helpers/classes';
 
 interface Props {
@@ -40,6 +41,10 @@ const TreeItem: React.FC<Props> = (props) => {
     setExpanded(false)
   }
   const [expanded, setExpanded] = useState(true)
+
+  useUpdate(expanded, () => {
+    console.log(expanded, 'expanded change');
+  })
 
   return <div key={item.value} className={sc(classes)}>
     <div className={sc('text')}>
