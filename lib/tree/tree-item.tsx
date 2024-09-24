@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useState } from 'react';
+import React, { ChangeEventHandler, useRef, useState } from 'react';
 import useUpdate from '@/hooks/useUpdate';
 import { scopedClassMaker } from '../helpers/classes';
 
@@ -41,10 +41,30 @@ const TreeItem: React.FC<Props> = (props) => {
     setExpanded(false)
   }
   const [expanded, setExpanded] = useState(true)
-
+  const treeRef = useRef<HTMLDivElement>(null)
+  
   useUpdate(expanded, () => {
-    console.log(expanded, 'expanded change');
-  })
+    const current = treeRef.current;
+    if (!current) return;
+
+    let isAnimating = false;
+    const handleTransitionEnd = () => {
+      current.style.height = '';
+      current.classList.toggle('ree-tree-children-present', expanded);
+      current.classList.toggle('ree-tree-children-gone', !expanded);
+      current.removeEventListener('transitionend', handleTransitionEnd);
+      isAnimating = false;
+    };
+
+    if (!isAnimating) {
+      const { height } = current.getBoundingClientRect();
+      current.style.height = expanded ? '0px' : `${height}px`;
+      current.getBoundingClientRect(); // Force reflow
+      current.style.height = expanded ? `${height}px` : '0px';
+      current.addEventListener('transitionend', handleTransitionEnd);
+      isAnimating = true;
+    }
+  });
 
   return <div key={item.value} className={sc(classes)}>
     <div className={sc('text')}>
@@ -63,7 +83,7 @@ const TreeItem: React.FC<Props> = (props) => {
         </span>  
       }
     </div>
-    <div className={sc({children: true, collapsed: !expanded})}>
+    <div ref={treeRef} className={sc({children: true, collapsed: !expanded})}>
       {item.children?.map(sub => 
         <TreeItem key={sub.value} treeProps={treeProps} item={sub} level={level + 1} />
       )}

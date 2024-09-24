@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   &-item {
+    border: 1px solid #ccc;
     line-height: 1.5;
   }
   &-level-1 {
@@ -24,6 +25,21 @@
       padding-left: 3em;
     }
   }
+  &-level-5 {
+    .ree-tree-text {
+      padding-left: 4em;
+    }
+  }
+  &-level-6 {
+    .ree-tree-text {
+      padding-left: 5em;
+    }
+  }
+  &-level-7 {
+    .ree-tree-text {
+      padding-left: 6em;
+    }
+  }
   &-collapse, &-expand {
     cursor: pointer;
   }
@@ -33,11 +49,11 @@
       background-color: orange;
     }
   }
-  &-collapsed {
-    height: 0;
+  &-children {
     overflow: hidden;
-  }
-  &-expanded {
-    transition: height 0.5s;
+    transition: height 0.3s;
+    &-gone {
+      height: 0;
+    }
   }
 }
