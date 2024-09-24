@@ -34,12 +34,25 @@ const TreeItem: React.FC<Props> = (props) => {
       }
     }
   }
+
+  const deleteNode = (item: SourceDataItem) => {
+    const findAndDelete = (array: SourceDataItem[], value: string): SourceDataItem[] => 
+    array.filter(item => {
+      if(item.children) {
+        item.children = findAndDelete(item.children, value)
+      }
+      return item.value !== value
+    })
+    treeProps.onUpdateSourceData(findAndDelete(treeProps.sourceData, item.value))
+  }
+  
   const expand = () => {
     setExpanded(true)
   }
   const collapse = () => {
     setExpanded(false)
   }
+
   const [expanded, setExpanded] = useState(true)
   const treeRef = useRef<HTMLDivElement>(null)
   
@@ -68,20 +81,25 @@ const TreeItem: React.FC<Props> = (props) => {
 
   return <div key={item.value} className={sc(classes)}>
     <div className={sc('text')}>
-      <input 
-        type='checkbox' 
-        onChange={onChange} 
-        checked={checked}
-      />
-      {item.text}
-      {item.children &&
-        <span>
-          {expanded ? 
-            <span onClick={collapse} className={sc('collapse')}>---</span> :
-            <span onClick={expand} className={sc('expand')}>+++</span>
-          }
-        </span>  
-      }
+      <div>
+        <input 
+          type='checkbox' 
+          onChange={onChange} 
+          checked={checked}
+          />
+        {item.text}
+        {item.children &&
+          <span>
+            {expanded ? 
+              <span onClick={collapse} className={sc('collapse')}>---</span> :
+              <span onClick={expand} className={sc('expand')}>+++</span>
+            }
+          </span>  
+        }
+      </div>
+      <div>
+        <span onClick={() => deleteNode(item)} className={sc('delete')}>Delete</span>
+      </div>
     </div>
     <div ref={treeRef} className={sc({children: true, collapsed: !expanded})}>
       {item.children?.map(sub => 

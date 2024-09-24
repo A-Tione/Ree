@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import Tree from './tree'
 
 const TreeExample: React.FC = () => {
-  const [array] = useState([
+  const [array, setArray] = useState([
     {text: '1', value: '1', 
       children: [
       {text: '1.1', value: '1.1', children: [
@@ -24,6 +24,7 @@ const TreeExample: React.FC = () => {
         sourceData={array}
         selected={selectedValue} 
         onChange={(value: string) => setSelectedValue(value)}
+        onUpdateSourceData={(value: any) => setArray(value)}
       />
     </div>
   )

@@ -40,11 +40,12 @@
       padding-left: 6em;
     }
   }
-  &-collapse, &-expand {
+  &-collapse, &-expand, &-delete{
     cursor: pointer;
   }
   &-text {
-    display: block;
+    display: flex;
+    justify-content: space-between;
     &:hover {
       background-color: orange;
     }
