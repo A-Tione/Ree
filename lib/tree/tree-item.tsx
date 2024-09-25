@@ -1,5 +1,5 @@
 import React, { ChangeEventHandler, useRef, useState } from 'react';
-import useUpdate from '@/hooks/useUpdate';
+import useUpdate from '../hooks/useUpdate';
 import { scopedClassMaker } from '../helpers/classes';
 
 interface Props {
@@ -34,27 +34,34 @@ const TreeItem: React.FC<Props> = (props) => {
       }
     }
   }
-
+  
   const deleteNode = (item: SourceDataItem) => {
     const findAndDelete = (array: SourceDataItem[], value: string): SourceDataItem[] => 
-    array.filter(item => {
-      if(item.children) {
-        item.children = findAndDelete(item.children, value)
+      array.filter(item => {
+        if (item.children) {
+          item.children = findAndDelete(item.children, value)
+        }
+        return item.value !== value
+      })
+      
+      if (treeProps.onUpdateSourceData) {
+        treeProps.onUpdateSourceData(findAndDelete(treeProps.sourceData, item.value))
       }
-      return item.value !== value
-    })
-    treeProps.onUpdateSourceData(findAndDelete(treeProps.sourceData, item.value))
+    }
+    
+    const expand = () => {
+      setExpanded(true)
+    }
+    const collapse = () => {
+      setExpanded(false)
   }
   
-  const expand = () => {
-    setExpanded(true)
-  }
-  const collapse = () => {
-    setExpanded(false)
-  }
-
   const [expanded, setExpanded] = useState(true)
   const treeRef = useRef<HTMLDivElement>(null)
+  const textClasses = {
+    'text': true,
+    'item-selected': checked
+  }
   
   useUpdate(expanded, () => {
     const current = treeRef.current;
@@ -79,15 +86,19 @@ const TreeItem: React.FC<Props> = (props) => {
     }
   });
 
+
+
   return <div key={item.value} className={sc(classes)}>
-    <div className={sc('text')}>
+    <div className={sc(textClasses)}>
       <div>
-        <input 
-          type='checkbox' 
-          onChange={onChange} 
-          checked={checked}
-          />
-        {item.text}
+        <label>
+          <input 
+            type='checkbox' 
+            onChange={onChange} 
+            checked={checked}
+            />
+          {item.text}
+          </label>
         {item.children &&
           <span>
             {expanded ? 

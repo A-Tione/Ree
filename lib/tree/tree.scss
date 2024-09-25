@@ -55,6 +55,7 @@
     transition: height 0.3s;
     &-gone {
       height: 0;
+      display: none;
     }
   }
 }
