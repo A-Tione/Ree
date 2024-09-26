@@ -9,9 +9,9 @@ import LayoutExample from "./lib/layout/layout.demo";
 import FormExample from "./lib/form/form.demo";
 import ScrollExample from "./lib/scroll/scroll.example";
 import TreeExample from "./lib/tree/tree.example";
+import CitySelectExample from "./lib/citySelect/citySelect.example";
 import {Layout, Aside, Header, Content, Footer} from './lib/layout/layout'
 import './example.scss'
-
 
 const container = document.getElementById("root");
 
@@ -46,6 +46,9 @@ root?.render(
             <li>
               <NavLink to="/tree">Tree</NavLink>
             </li>
+            <li>
+              <NavLink to="/citySelect">CitySelect</NavLink>
+            </li>
           </ul>
         </Aside>
         <Content className="site-main">
@@ -57,6 +60,7 @@ root?.render(
             <Route path="/form" element={<FormExample />} />
             <Route path="/scroll" element={<ScrollExample />} />
             <Route path="/tree" element={<TreeExample />} />
+            <Route path="/citySelect" element={<CitySelectExample />} />
           </Routes>
         </Content>
       </Layout>
