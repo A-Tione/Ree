@@ -1,46 +1,29 @@
 .ree-city-select {
-  &-wrapper {
-    position: relative;
-    width: 100%;
+  &-province-container {
+    margin-bottom: 20px;
+    overflow: hidden;
   }
 
-  &-input {
-    width: 100%;
-    padding: 8px 12px;
-    font-size: 14px;
-    border: 1px solid #d9d9d9;
-    border-radius: 4px;
-    outline: none;
-    transition: all 0.3s;
-
-    &:focus {
-      border-color: #40a9ff;
-      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
-    }
+  &-province {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    height: 60px;
+    line-height: 60px;
+    float: left;
+    width: 100px;
   }
 
-  &-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    max-height: 300px;
-    overflow-y: auto;
-    background-color: #fff;
-    border: 1px solid #d9d9d9;
-    border-radius: 0 0 4px 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
-  }
-
-  &-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  &-cities {
+    margin-left: 100px;
   }
 
   &-item {
-    padding: 8px 12px;
+    float: left;
+    width: calc(50% - 10px);
+    height: 30px;
+    line-height: 30px;
+    padding: 0 5px;
     cursor: pointer;
     transition: background-color 0.3s;
 
@@ -48,9 +31,15 @@
       background-color: #f5f5f5;
     }
 
-    &.active {
+    &.selected {
       background-color: #e6f7ff;
       color: #1890ff;
     }
+  }
+
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
   }
 }
