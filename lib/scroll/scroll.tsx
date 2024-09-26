@@ -120,15 +120,20 @@ const Scroll: React.FunctionComponent<Props> = (props) => {
       return;
     }
     if (!pulling.current) {return;}
-    setTranslateY(translateY + deltaY);
-    console.log(translateY + deltaY);
+    const newTranslateY = Math.min(touchY, Math.max(0, translateY + deltaY));
+    setTranslateY(newTranslateY);
     lastYRef.current = e.touches[0].clientY;
   };
   const onTouchEnd: TouchEventHandler = () => {
     if (pulling.current) {
-      setTranslateY(0);
-      if (translateY >= touchY) {
-        onPull && onPull();
+      if (translateY >= touchY * 0.8) {
+        setTranslateY(touchY);
+        setTimeout(() => {
+          setTranslateY(0);
+          onPull && onPull();
+        }, 500);
+      } else {
+        setTranslateY(0);
       }
       pulling.current = false;
     }
@@ -152,10 +157,11 @@ const Scroll: React.FunctionComponent<Props> = (props) => {
             onMouseDown={onMouseDown}
         />
       </div>
-      <div className="fui-scroll-pulling" style={{height: translateY}}>
-        {translateY === touchY ?
-          <span className="fui-scroll-pulling-text">释放手指即可更新</span> :
-          <span className="fui-scroll-pulling-icon">↓</span>}
+      <div className={sc('pulling')} style={{height: translateY}}>
+        {translateY >= touchY * 0.8 ?
+          <span className={sc('pulling-text')}>释放手指即可更新</span> :
+         translateY > 20 ? <span className={sc('pulling-icon')}>↓</span> : null
+        }
       </div>
     </div>
   )
