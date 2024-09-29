@@ -13,6 +13,7 @@ const sc = scopedClassMaker('ree-city-select');
 
 const CitySelect: React.FC<CitySelectProps> = ({ dataSource, onChange }) => {
   const [selectedCity, setSelectedCity] = useState<string>('加载中...');
+  const [currentLetter, setCurrentLetter] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -39,6 +40,38 @@ const CitySelect: React.FC<CitySelectProps> = ({ dataSource, onChange }) => {
     }
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      console.log('滚动');
+      
+      const letterGroups = document.querySelectorAll('.ree-city-select-letter-group');
+      const viewportHeight = window.innerHeight;
+      
+      for (let i = 0; i < letterGroups.length; i++) {
+        const rect = letterGroups[i].getBoundingClientRect();
+        if (rect.top >= 0 && rect.top <= viewportHeight / 2) {
+          const letter = letterGroups[i].id.split('-')[1];
+          console.log(1111,letter);
+          
+          setCurrentLetter(letter);
+          break;
+        }
+      }
+    };
+
+    const modalContent = document.querySelector('.ree-city-select-modal');
+    if (modalContent) {
+      console.log('Adding scroll listener');
+      modalContent.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (modalContent) {
+        modalContent.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [isOpen]);
+
   const renderCityList = () => {
     const sortedLetters = Object.keys(dataSource).sort();
     return (
@@ -47,10 +80,10 @@ const CitySelect: React.FC<CitySelectProps> = ({ dataSource, onChange }) => {
           {sortedLetters.map((letter) => (
             <span
               key={letter}
-              className={sc('letter')}
+              className={sc('letter', {extra: currentLetter === letter ? 'active' : ''})}
               onClick={() => scrollToLetter(letter)}
             >
-              {letter.toLocaleUpperCase()}
+              {letter.toLocaleUpperCase()}  
             </span>
           ))}
         </div>
