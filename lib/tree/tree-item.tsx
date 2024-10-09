@@ -11,7 +11,6 @@ interface Props {
 const scopedClass = scopedClassMaker('ree-tree')
 const sc = scopedClass
 
-
 const TreeItem: React.FC<Props> = (props) => {
   const { item, level, treeProps } = props
   const classes = {
@@ -19,12 +18,34 @@ const TreeItem: React.FC<Props> = (props) => {
     'item': true
   }
   const checked = treeProps.multiple ? treeProps.selected.indexOf(item.value) >= 0 : treeProps.selected === item.value
+
+  function collectChildrenValues(item: SourceDataItem): string[] {
+    return flatten(item.children?.map(i => [i.value, collectChildrenValues(i)]))
+  }
+
+  interface deepArray<T> extends Array<T | deepArray<T>> {}
+
+  function flatten(array?: deepArray<string>): string[] {
+    if (!array) {
+      return []
+    }
+
+    return array.reduce<string[]> ((result, current) => 
+      result.concat(typeof current === 'string' ? current : flatten(current)), []
+    )
+  }
+
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const childrenValues = collectChildrenValues(item)
+    console.log(childrenValues, 'childrenvalues');
+    
     if(treeProps.multiple) {
       if(e.target.checked) {
-        treeProps.onChange([...treeProps.selected, item.value])
+        treeProps.onChange([...treeProps.selected, item.value, ...childrenValues])
       } else {
-        treeProps.onChange(treeProps.selected.filter(value => value !== item.value))
+        treeProps.onChange(treeProps.selected.filter(
+          value => value !== item.value && childrenValues.indexOf(value) === -1)
+        )
       }
     } else {
       if(e.target.checked) {
@@ -36,27 +57,27 @@ const TreeItem: React.FC<Props> = (props) => {
   }
   
   const deleteNode = (item: SourceDataItem) => {
-    const findAndDelete = (array: SourceDataItem[], value: string): SourceDataItem[] => 
-      array.filter(item => {
+    const findAndDelete = (array: SourceDataItem[], value: string): SourceDataItem[] => {
+      return array.filter((item) => {
         if (item.children) {
-          item.children = findAndDelete(item.children, value)
+          item.children = findAndDelete(item.children, value);
         }
-        return item.value !== value
-      })
-      
-      if (treeProps.onUpdateSourceData) {
-        treeProps.onUpdateSourceData(findAndDelete(treeProps.sourceData, item.value))
-      }
+        return item.value !== value;
+      });
+    };
+    if (treeProps.onUpdateSourceData) {
+      treeProps.onUpdateSourceData(findAndDelete(treeProps.sourceData, item.value));
     }
+  };
     
-    const expand = () => {
-      setExpanded(true)
-    }
-    const collapse = () => {
-      setExpanded(false)
+  const expand = () => {
+    setExpanded(true)
   }
-  
+  const collapse = () => {
+    setExpanded(false)
+  }
   const [expanded, setExpanded] = useState(true)
+
   const treeRef = useRef<HTMLDivElement>(null)
   const textClasses = {
     'text': true,
@@ -86,8 +107,6 @@ const TreeItem: React.FC<Props> = (props) => {
     }
   });
 
-
-
   return <div key={item.value} className={sc(classes)}>
     <div className={sc(textClasses)}>
       <div>
@@ -98,7 +117,7 @@ const TreeItem: React.FC<Props> = (props) => {
             checked={checked}
             />
           {item.text}
-          </label>
+        </label>
         {item.children &&
           <span>
             {expanded ? 
