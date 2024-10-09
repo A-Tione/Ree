@@ -1,12 +1,15 @@
-import React, { ChangeEventHandler, useRef, useState } from 'react';
+import React, { ChangeEventHandler, useRef } from 'react';
 import useUpdate from '../hooks/useUpdate';
+import useTrigger from '@/hooks/useTrigger';
 import { scopedClassMaker } from '../helpers/classes';
 
 interface Props {
   item: SourceDataItem;
   level: number;
   treeProps: TreeProps;
+  onItemChange: (values: string[]) => void
 }
+interface deepArray<T> extends Array<T | deepArray<T>> {}
 
 const scopedClass = scopedClassMaker('ree-tree')
 const sc = scopedClass
@@ -19,31 +22,14 @@ const TreeItem: React.FC<Props> = (props) => {
   }
   const checked = treeProps.multiple ? treeProps.selected.indexOf(item.value) >= 0 : treeProps.selected === item.value
 
-  function collectChildrenValues(item: SourceDataItem): string[] {
-    return flatten(item.children?.map(i => [i.value, collectChildrenValues(i)]))
-  }
-
-  interface deepArray<T> extends Array<T | deepArray<T>> {}
-
-  function flatten(array?: deepArray<string>): string[] {
-    if (!array) {
-      return []
-    }
-
-    return array.reduce<string[]> ((result, current) => 
-      result.concat(typeof current === 'string' ? current : flatten(current)), []
-    )
-  }
-
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const childrenValues = collectChildrenValues(item)
-    console.log(childrenValues, 'childrenvalues');
     
     if(treeProps.multiple) {
       if(e.target.checked) {
-        treeProps.onChange([...treeProps.selected, item.value, ...childrenValues])
+        props.onItemChange([...treeProps.selected, item.value, ...childrenValues])
       } else {
-        treeProps.onChange(treeProps.selected.filter(
+        props.onItemChange(treeProps.selected.filter(
           value => value !== item.value && childrenValues.indexOf(value) === -1)
         )
       }
@@ -54,6 +40,28 @@ const TreeItem: React.FC<Props> = (props) => {
         treeProps.onChange('')
       }
     }
+  }
+
+  const onItemChange = (values: string[]) => {
+    const childrenValues = collectChildrenValues(item)
+    const common = intersect(values, childrenValues)
+    if(common.length) {
+      props.onItemChange(Array.from(new Set(values.concat(item.value))))
+      inputRef.current!.indeterminate = common.length !== childrenValues.length
+    } else {
+      props.onItemChange(values.filter(i => i !== item.value))
+      inputRef.current!.indeterminate = false
+    }
+  }
+
+  function intersect<T>(array1: string[],array2: string[]) {
+    const result = []
+    for (let i = 0; i < array1.length; i++) {
+      if(array2.indexOf(array1[i]) >= 0) {
+        result.push(array1[i])
+      }
+    }
+    return result;
   }
   
   const deleteNode = (item: SourceDataItem) => {
@@ -69,21 +77,14 @@ const TreeItem: React.FC<Props> = (props) => {
       treeProps.onUpdateSourceData(findAndDelete(treeProps.sourceData, item.value));
     }
   };
-    
-  const expand = () => {
-    setExpanded(true)
-  }
-  const collapse = () => {
-    setExpanded(false)
-  }
-  const [expanded, setExpanded] = useState(true)
 
   const treeRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
   const textClasses = {
     'text': true,
     'item-selected': checked
   }
-  
+  const {expanded, expand, collapse} = useTrigger(true)
   useUpdate(expanded, () => {
     const current = treeRef.current;
     if (!current) return;
@@ -112,6 +113,7 @@ const TreeItem: React.FC<Props> = (props) => {
       <div>
         <label>
           <input 
+            ref={inputRef}
             type='checkbox' 
             onChange={onChange} 
             checked={checked}
@@ -133,10 +135,24 @@ const TreeItem: React.FC<Props> = (props) => {
     </div>
     <div ref={treeRef} className={sc({children: true, collapsed: !expanded})}>
       {item.children?.map(sub => 
-        <TreeItem key={sub.value} treeProps={treeProps} item={sub} level={level + 1} />
+        <TreeItem key={sub.value} onItemChange={onItemChange} treeProps={treeProps} item={sub} level={level + 1} />
       )}
     </div>
   </div>
 }
 
 export default TreeItem;
+
+function collectChildrenValues(item: SourceDataItem): string[] {
+  return flatten(item.children?.map(i => [i.value, collectChildrenValues(i)]))
+}
+
+
+function flatten(array?: deepArray<string>): string[] {
+  if (!array) {
+    return []
+  }
+  return array.reduce<string[]> ((result, current) => 
+    result.concat(typeof current === 'string' ? current : flatten(current)), []
+  )
+}
