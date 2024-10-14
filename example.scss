@@ -29,25 +29,61 @@ $border-color: #eee;
 }
 .site-header {
   background: $border-color;
-  padding: 0 0 8px;
-  .logo {
-    padding: 0 $padding;
+  padding: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  &-left {
     display: flex;
+    align-items: center;
+    .toggle-sidebar {
+    display: none;
+    @media (max-width: 768px) {
+      display: flex;
+    }
+    padding-left: $padding;
     align-items: center;
     svg {
       display: inline-block;
     }
+    }
+    .logo {
+      padding: 0 $padding;
+      display: flex;
+      align-items: center;
+      svg {
+        display: inline-block;
+      }
+    }
   }
+}
+.github {
+  padding: 0 $padding;
 }
 .site-aside {
   border-right: 1px solid #EEEEEE;
   margin-right: 16px;
+  &.open {
+    @media (max-width: 768px) {
+      display: block !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 66.66666666666667%;
+      max-width: 240px;
+      height: 100vh;
+      background: #fff;
+      z-index: 10;
+      transform: translateX(0);
+      transition: transform 0.3s ease;
+    }
+  }
   h2 {
     padding: $padding;
     font-size: 18px;
   }
   ul {
     min-width: 12em;
+    margin-top: 12px;
     > li {
       padding: 8px 0;
       a {
@@ -71,4 +107,17 @@ $border-color: #eee;
   color: #666;
   padding: 16px 0;
   border-top: 1px solid $border-color;
+}
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9;
+  display: none;
+  &.active {
+    display: block;
+  }
 }

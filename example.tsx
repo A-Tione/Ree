@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import { Icon } from "./lib";
-import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
+import { Icon, Button } from "./lib";
+import { BrowserRouter as Router, Routes, Route, NavLink, useLocation } from "react-router-dom";
 import IconDemo from './lib/icon/icon.demo'
 import ButtonExample from "./lib/button.example";
 import DialogExample from "./lib/dialog/dialog.demo";
@@ -17,37 +17,62 @@ const container = document.getElementById("root");
 
 const root = container ? createRoot(container) : null;
 
-root?.render(
-  <Router>
+const App = () => {
+  const [isAsideOpen, setIsAsideOpen] = useState(window.innerWidth < 768);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setIsAsideOpen(false);
+    }
+  }, [location]);
+
+  return (
     <Layout className="site-page">
+      <div className={`mask ${isAsideOpen ? 'active' : ''}`} onClick={() => setIsAsideOpen(false)}></div>
       <Header className="site-header">
-        <div className="logo">
-          <Icon name='ree' style={{width: '4em', height: '4em', color: '#50A060'}} />
+        <div className="site-header-left">
+          <div className="toggle-sidebar" onClick={() => setIsAsideOpen(!isAsideOpen)}>
+            <Button>
+              <Icon name="menu" style={{width: '2em', height: '2em'}}/>
+            </Button>
+          </div>
+          <div className="logo">
+              <Icon name='ree' style={{width: '8em', height: '4em', color: '#50A060'}} />
+          </div>
         </div>
+        <a className="github" href="https://github.com/A-Tione/ree/tree/main" target="_blank" rel="noopener noreferrer">
+            <Icon name="github" style={{width: '2em', height: '4em'}}/>
+        </a>
       </Header>
       <Layout>
-        <Aside className="site-aside">
+        <Aside className={`site-aside ${isAsideOpen ? 'open' : ''}`} style={{display: window.innerWidth < 768 ? 'none' : 'block'}}>
+          {isAsideOpen && <Header className="site-header" style={{margin: '-8px -16px', paddingLeft: '8px'}}>
+            <div className="logo">
+                <Icon name='ree' style={{width: '8em', height: '4em', color: '#50A060'}} />
+            </div>
+          </Header>}
           <ul>
             <li>
-              <NavLink to="/icon">Icon</NavLink>
+              <NavLink to="/icon" onClick={() => setIsAsideOpen(false)}>Icon</NavLink>
             </li>
             <li>
-              <NavLink to="/dialog">Dialog</NavLink>
+              <NavLink to="/dialog" onClick={() => setIsAsideOpen(false)}>Dialog</NavLink>
             </li>
             <li>
-              <NavLink to="/layout">Layout</NavLink>
+              <NavLink to="/layout" onClick={() => setIsAsideOpen(false)}>Layout</NavLink>
             </li>
             <li>
-              <NavLink to="/form">Form</NavLink>
+              <NavLink to="/form" onClick={() => setIsAsideOpen(false)}>Form</NavLink>
             </li>
             <li>
-              <NavLink to="/scroll">Scroll</NavLink>
+              <NavLink to="/scroll" onClick={() => setIsAsideOpen(false)}>Scroll</NavLink>
             </li>
             <li>
-              <NavLink to="/tree">Tree</NavLink>
+              <NavLink to="/tree" onClick={() => setIsAsideOpen(false)}>Tree</NavLink>
             </li>
             <li>
-              <NavLink to="/citySelect">CitySelect</NavLink>
+              <NavLink to="/citySelect" onClick={() => setIsAsideOpen(false)}>CitySelect</NavLink>
             </li>
           </ul>
         </Aside>
@@ -68,5 +93,11 @@ root?.render(
         &copy; A-Tione
       </Footer>
     </Layout>
+  );
+};
+
+root?.render(
+  <Router>
+    <App />
   </Router>
-)
+);
