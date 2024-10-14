@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useState } from 'react';
 import {Highlight, themes} from 'prism-react-renderer'
+import Button from '@/button/button';
 
 interface Props {
   code: string;
@@ -30,12 +31,14 @@ const Demo: React.FunctionComponent<Props> = (props) => {
   </Highlight>
   )
   return (
-    <div>
-      <div className='example'>
-        {props.children}
+    <div style={{marginBottom: '60px'}}>
+      <div style={{ padding: '10px', border: '1px solid #ddd' }}>
+        <div className='example'>
+          {props.children}
+        </div>
       </div>
-      <div>
-        <button onClick={() => setCodeVisible(!codeVisible)}>Preview Code</button>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'right', padding: '10px', border: '1px solid #ddd', borderTop: 'none' }}>
+        <Button onClick={() => setCodeVisible(!codeVisible)} style={{ marginTop: '10px', marginBottom: '8px' }}>{codeVisible ? 'Hide Code' : 'Show Code'}</Button>
         {codeVisible && code}
       </div>
     </div>

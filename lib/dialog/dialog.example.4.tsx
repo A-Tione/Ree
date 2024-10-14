@@ -1,5 +1,6 @@
 import React from 'react'
 import {confirm} from './dialogs'
+import Button from '@/button/button'
 
 export default function () {
 
@@ -7,14 +8,14 @@ export default function () {
     <div>
       <div>
         <h1>Example 4(Confirm)</h1>
-        <button onClick={() => confirm(
+        <Button level='important' onClick={() => confirm(
             'Content',
             () => {console.log('Yes')}, 
             () => {console.log('No')}
           )}
         >
           Confirm
-        </button>
+        </Button>
       </div>
     </div>
   )

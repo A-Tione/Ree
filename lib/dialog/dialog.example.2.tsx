@@ -1,5 +1,6 @@
 import React from 'react'
 import {alert} from './dialogs'
+import Button from '@/button/button'
 
 export default function () {
 
@@ -7,7 +8,7 @@ export default function () {
     <div>
       <div>
         <h1>example 2(Alert)</h1>
-        <button onClick={() => alert('Alert')}>alert</button>
+        <Button level='important' onClick={() => alert('Alert')}>alert</Button>
       </div>
     </div>
   )

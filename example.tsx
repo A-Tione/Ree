@@ -54,25 +54,25 @@ const App = () => {
           </Header>}
           <ul>
             <li>
-              <NavLink to="/icon" onClick={() => setIsAsideOpen(false)}>Icon</NavLink>
+              <NavLink to="/icon">Icon</NavLink>
             </li>
             <li>
-              <NavLink to="/dialog" onClick={() => setIsAsideOpen(false)}>Dialog</NavLink>
+              <NavLink to="/dialog">Dialog</NavLink>
             </li>
             <li>
-              <NavLink to="/layout" onClick={() => setIsAsideOpen(false)}>Layout</NavLink>
+              <NavLink to="/layout">Layout</NavLink>
             </li>
             <li>
-              <NavLink to="/form" onClick={() => setIsAsideOpen(false)}>Form</NavLink>
+              <NavLink to="/form">Form</NavLink>
             </li>
             <li>
-              <NavLink to="/scroll" onClick={() => setIsAsideOpen(false)}>Scroll</NavLink>
+              <NavLink to="/scroll">Scroll</NavLink>
             </li>
             <li>
-              <NavLink to="/tree" onClick={() => setIsAsideOpen(false)}>Tree</NavLink>
+              <NavLink to="/tree">Tree</NavLink>
             </li>
             <li>
-              <NavLink to="/citySelect" onClick={() => setIsAsideOpen(false)}>CitySelect</NavLink>
+              <NavLink to="/citySelect">CitySelect</NavLink>
             </li>
           </ul>
         </Aside>

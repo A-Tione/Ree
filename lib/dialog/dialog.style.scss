@@ -32,7 +32,8 @@
     position: absolute;
     bottom: 100%;
     left: 100%;
-    background: $main-color;
+    background:white;
+    border: 1px solid lighten(#333, 70%);
     width: 2em;
     height: 2em;
     border-radius: 50%;

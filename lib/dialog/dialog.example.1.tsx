@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import Dialog from './dialogs'
+import Button from '@/button/button'
 
 export default function () {
   const [x, setX] = useState(false)
@@ -8,11 +9,11 @@ export default function () {
     <div>
       <div>
         <h1>example 1(Dialog1)</h1>
-        <button onClick={() => setX(!x)}>click</button>
+        <Button level='important' onClick={() => setX(!x)}>Click</Button>
         <Dialog visible={x} buttons={
           [
-            <button onClick={() => {setX(false)}}>Confirm</button>,
-            <button onClick={() => {setX(false)}}>Cancel</button>
+            <Button onClick={() => {setX(false)}}>Confirm</Button>,
+            <Button onClick={() => {setX(false)}}>Cancel</Button>
           ]
         } onClose={() => {setX(false)}}>
           <strong>hi</strong>

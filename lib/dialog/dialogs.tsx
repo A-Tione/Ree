@@ -4,6 +4,7 @@ import {Icon} from '../index'
 import { scopedClassMaker } from '../helpers/classes'
 import ReactDOM from 'react-dom'
 import {createRoot} from 'react-dom/client'
+import Button from '@/button/button'
 
 interface Props {
   visible: boolean;
@@ -81,14 +82,14 @@ const modal = (content: ReactNode, buttons?: ReactElement[], afterClose?: () => 
 }
 
 const alert = (content: string) => {
-  const button = <button onClick={() => close()}>OK</button>
+  const button = <Button onClick={() => close()}>OK</Button>
   const close = modal(content, [button])
 }
 
 const confirm = (content: string, yes?: () => void, no?: () => void) => {
   const buttons = [
-    <button onClick={() => {close(), yes &&yes()}}>Yes</button>,
-    <button onClick={() => {close(), no && no()}}>No</button>
+    <Button onClick={() => {close(), yes &&yes()}}>Yes</Button>,
+    <Button onClick={() => {close(), no && no()}}>No</Button>
   ]
   const close = modal(content, buttons)
 }
