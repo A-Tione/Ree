@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { Icon, Button } from "./lib";
 import { BrowserRouter as Router, Routes, Route, NavLink, useLocation } from "react-router-dom";
 import IconDemo from './lib/icon/icon.demo'
-import ButtonExample from "./lib/button.example";
+import ButtonExample from "./lib/button/button.demo";
 import DialogExample from "./lib/dialog/dialog.demo";
 import LayoutExample from "./lib/layout/layout.demo";
 import FormExample from "./lib/form/form.demo";
@@ -55,6 +55,9 @@ const App = () => {
           <ul>
             <li>
               <NavLink to="/icon">Icon</NavLink>
+            </li>
+            <li>
+              <NavLink to="/button">Button</NavLink>
             </li>
             <li>
               <NavLink to="/dialog">Dialog</NavLink>

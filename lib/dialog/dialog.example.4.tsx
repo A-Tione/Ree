@@ -8,7 +8,7 @@ export default function () {
     <div>
       <div>
         <h1>Example 4(Confirm)</h1>
-        <Button level='important' onClick={() => confirm(
+        <Button level='main' onClick={() => confirm(
             'Content',
             () => {console.log('Yes')}, 
             () => {console.log('No')}

@@ -8,7 +8,7 @@ export default function () {
     <div>
       <div>
         <h1>example 2(Alert)</h1>
-        <Button level='important' onClick={() => alert('Alert')}>alert</Button>
+        <Button level='main' onClick={() => alert('Alert')}>alert</Button>
       </div>
     </div>
   )

@@ -9,7 +9,7 @@ export default function () {
     <div>
       <div>
         <h1>example 1(Dialog1)</h1>
-        <Button level='important' onClick={() => setX(!x)}>Click</Button>
+        <Button level='main' onClick={() => setX(!x)}>Click</Button>
         <Dialog visible={x} buttons={
           [
             <Button onClick={() => {setX(false)}}>Confirm</Button>,

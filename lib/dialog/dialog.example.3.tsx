@@ -11,7 +11,7 @@ export default function () {
     <div>
       <div>
         <h1>example 3(Modal)</h1>
-        <Button level='important' onClick={openModal}>Modal</Button>
+        <Button level='main' onClick={openModal}>Modal</Button>
       </div>
     </div>
   )

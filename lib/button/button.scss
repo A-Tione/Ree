@@ -1,35 +1,147 @@
 @import "../helper";
+$h: 32px;
+$border-color: #d9d9d9;
+$color: #333;
+$blue: #40a9ff;
+$red: #f1463a;
+$grey: #999;
+$radius: 4px;
 .ree-button {
-  padding: 0.4em 0.6em;
-  line-height: 22px;
-  transition: all 250ms;
-  display: flex;
+
+  box-sizing: border-box;
+  height: $h;
+  padding: 0 12px;
+  cursor: pointer;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
-  border-radius: 8px;
+  white-space: nowrap;
+  background: white;
+  color: $color;
+  border: 1px solid $border-color;
+  border-radius: $radius;
+  box-shadow: 0 1px 0 fade-out(black, 0.95);
+  & + & {
+    margin-left: 8px;
+  }
+  &:hover,
+  &:focus {
+    color: $blue;
+    border-color: $blue;
+  }
   &:focus {
     outline: none;
   }
-  &-normal {
-    color: #333;
-    border: 1px solid lighten(#333, 70%); // Lightened border color
-    background: white;
-    &:hover, &:focus {
-      border-color: $main-color;
-      color: $main-color;
+  &::-moz-focus-inner {
+    border: 0;
+  }
+  &.ree-theme-link {
+    border-color: transparent;
+    box-shadow: none;
+    color: $blue;
+    &:hover,
+    &:focus {
+      color: lighten($blue, 10%);
     }
   }
-  &-important {
-    color: white;
-    border: 1px solid $main-color;
-    background: $main-color;
-    &:hover, &:focus {
-      background: lighten($main-color, 10%);
-      border-color: lighten($main-color, 10%);
+  &.ree-theme-text {
+    border-color: transparent;
+    box-shadow: none;
+    color: $color;
+    &:hover,
+    &:focus {
+      color: darken($blue, 10%);
     }
+  }
+  &.ree-size-big{
+    font-size: 24px;
+    height: 48px;
+    padding: 0 16px
+  }
+  &.ree-size-small{
+    font-size: 12px;
+    height: 20px;
+    padding: 0 4px;
+  }
+  &.ree-theme-button {
+    &.ree-level-main {
+      background: $blue;
+      color: white;
+      border-color: $blue;
+      &:hover,
+      &:focus {
+        background: darken($blue, 10%);
+        border-color: darken($blue, 10%);
+      }
+    }
+    &.ree-level-danger {
+      background: red;
+      color: white;
+      border-color: red;
+      &:hover,
+      &:focus {
+        background: darken($red, 10%);
+        border-color: darken($red, 10%);
+      }
+    }
+  }
+  &.ree-theme-text {
+    &.ree-level-main {
+      color: $blue;
+      &:hover,
+      &:focus {
+        color: darken($blue, 10%);
+      }
+    }
+    &.ree-level-danger {
+      color: $red;
+      &:hover,
+      &:focus {
+        color: darken($red, 10%);
+      }
+    }
+  }
+  &.ree-theme-link {
+    &.ree-level-danger {
+      color: $red;
+      &:hover,
+      &:focus {
+        color: darken($red, 10%);
+      }
+    }
+  }
+  &.ree-theme-button {
+    &[disabled] {
+      cursor: not-allowed;
+      color: $grey;
+      &:hover {
+        border-color: $grey;
+      }
+    }
+  }
+  &.ree-theme-link, &.ree-theme-text {
+    &[disabled] {
+      cursor: not-allowed;
+      color: $grey;
+    }
+  }
+  > .ree-loadingIndicator {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    margin-right: 4px;
+    border-radius: 8px; 
+    border-color: $blue $blue $blue transparent;
+    border-style: solid;
+    border-width: 2px;
+    animation: loading 1s linear infinite;
   }
 }
-.ree-button + .ree-button {
-  margin-left: 8px;
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
