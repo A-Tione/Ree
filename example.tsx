@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { Icon, Button } from "./lib";
-import { BrowserRouter as Router, Routes, Route, NavLink, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, NavLink, useLocation, useNavigate } from "react-router-dom";
 import IconDemo from './lib/icon/icon.demo'
 import ButtonExample from "./lib/button/button.demo";
 import DialogExample from "./lib/dialog/dialog.demo";
@@ -20,6 +20,11 @@ const root = container ? createRoot(container) : null;
 const App = () => {
   const [isAsideOpen, setIsAsideOpen] = useState(window.innerWidth < 768);
   const location = useLocation();
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    navigate('/icon')
+  }, [])
 
   useEffect(() => {
     if (location.pathname !== '/') {
